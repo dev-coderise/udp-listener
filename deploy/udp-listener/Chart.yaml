@@ -1,0 +1,10 @@
+apiVersion: v2
+name: udp-listener
+description: A Helm chart for deploying UDP Listener on Kubernetes
+type: application
+version: 1.0
+appVersion: "1.0"
+maintainers:
+  - name: Harmeek Jhutty
+    email: hjhutty@coderise.io
+    url: https://coderise.io/

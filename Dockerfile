@@ -1,18 +1,20 @@
-FROM gliderlabs/alpine:3.3
-MAINTAINER	mendhak <docker@mendhak.com>
+FROM alpine:latest
 
-RUN apk add --update \
-    python \
-    python-dev \
-    py-pip \
+RUN apk update && \
+    apk add --no-cache \
+    python3 \
+    py3-pip \
+    python3-dev \
     build-base \
-  && pip install virtualenv \
+  && rm /usr/lib/python*/EXTERNALLY-MANAGED \
+  && python3 -m ensurepip \
+  && pip3 install --upgrade pip \
+  && pip3 install virtualenv \
   && rm -rf /var/cache/apk/*
 
-
 ENV UDPPORT 5005
-ADD udplistener.py /udplistener.py
-CMD ["python", "-u","/udplistener.py"]
+COPY udplistener.py /udplistener.py
+CMD ["python3", "-u", "/udplistener.py"]
 
 EXPOSE ${UDPPORT}
 EXPOSE ${UDPPORT}/udp

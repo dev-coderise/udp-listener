@@ -1,8 +1,0 @@
-udp:
-  container_name: my-udp-listener
-  image: mendhak/udp-listener
-  environment:
-    - UDPPORT=4001
-  ports:
-  - "0.0.0.0:4001:4001"
-  - "0.0.0.0:4001:4001/udp"

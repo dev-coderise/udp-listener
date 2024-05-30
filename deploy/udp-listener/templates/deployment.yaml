@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "udp-listener.fullname" . }}
+  labels:
+    {{- include "udp-listener.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "udp-listener.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "udp-listener.selectorLabels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ include "udp-listener.serviceAccountName" . }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default "latest" }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: udp
+              containerPort: {{ .Values.service.port }}
+              protocol: UDP
