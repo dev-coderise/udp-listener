@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "udp-listener.fullname" . }}
+  name: {{ .Values.name }}
   annotations:
     {{- range $key, $value := .Values.service.annotations }}
     {{ $key }}: {{ $value | quote }}

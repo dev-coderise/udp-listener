@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "udp-listener.fullname" . }}
+  name: {{ .Values.name }}
   labels:
     {{- include "udp-listener.labels" . | nindent 4 }}
 spec:
@@ -24,6 +24,9 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default "latest" }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: UDPPORT
+              value: {{ .Values.service.port }}
           ports:
             - name: udp
               containerPort: {{ .Values.service.port }}

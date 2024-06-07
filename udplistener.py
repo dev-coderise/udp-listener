@@ -11,4 +11,4 @@ sock.bind((UDP_IP, UDP_PORT))
 
 while True:
     data, addr = sock.recvfrom(1024)
-    print(data.decode('utf-8'))
+    print(data)
